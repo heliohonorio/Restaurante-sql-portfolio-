@@ -1,0 +1,78 @@
+erDiagram
+    CLIENTES ||--o{ PEDIDOS : "faz"
+    CLIENTES ||--o{ AVALIACOES : "avalia"
+    MESAS ||--o{ PEDIDOS : "recebe"
+    FUNCIONARIOS ||--o{ PEDIDOS : "atende"
+    CATEGORIAS ||--o{ PRODUTOS : "agrupa"
+    PRODUTOS ||--o{ ITENS_PEDIDO : "compoe"
+    PEDIDOS ||--|{ ITENS_PEDIDO : "contem"
+    PEDIDOS ||--o| AVALIACOES : "possui"
+
+    CLIENTES {
+        int id_cliente PK
+        varchar nome
+        varchar telefone
+        varchar email UK
+        timestamp data_cadastro
+    }
+
+    MESAS {
+        int id_mesa PK
+        int numero_mesa UK
+        int capacidade
+        enum status
+    }
+
+    FUNCIONARIOS {
+        int id_funcionario PK
+        varchar nome
+        enum cargo
+        varchar telefone
+        decimal salario
+        date data_contratacao
+    }
+
+    CATEGORIAS {
+        int id_categoria PK
+        varchar nome_categoria UK
+        text descricao
+    }
+
+    PRODUTOS {
+        int id_produto PK
+        int id_categoria FK
+        varchar nome_produto
+        text descricao
+        decimal preco
+        boolean disponivel
+    }
+
+    PEDIDOS {
+        int id_pedido PK
+        int id_cliente FK
+        int id_mesa FK
+        int id_funcionario FK
+        timestamp data_hora
+        enum status
+        decimal valor_total
+        enum forma_pagamento
+    }
+
+    ITENS_PEDIDO {
+        int id_item PK
+        int id_pedido FK
+        int id_produto FK
+        int quantidade
+        decimal preco_unitario
+        decimal subtotal
+        text observacoes
+    }
+
+    AVALIACOES {
+        int id_avaliacao PK
+        int id_pedido FK
+        int id_cliente FK
+        int nota
+        text comentario
+        timestamp data_avaliacao
+    }
